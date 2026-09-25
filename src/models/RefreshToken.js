@@ -9,6 +9,7 @@ const refreshTokenSchema = new mongoose.Schema({
     index: true,
   },
   revoked: { type: Boolean, default: false },
+  revokedAt:{type:Date},
   family: { type: String, required: true, index: true },
   createdByIp: { type: String },
   userAgent: { type: String },

@@ -4,6 +4,7 @@ import { accessExpiry, refreshExpiry, seceretKey } from "../config/env.js";
 import crypto from "crypto";
 import RefreshToken from "../models/RefreshToken.js";
 
+const GRACE_PERIOD_MS = 30 * 1000;
 export const generateAccessToken = (userId) => {
   return jwt.sign({ sub: userId.toString() }, seceretKey, {
     expiresIn: accessExpiry,
@@ -40,6 +41,7 @@ export const issueRefreshToken = async (userId, family, ip, userAgent) => {
 
 export const rotateRefreshToken = async (rawToken, ip, userAgent) => {
   try {
+    const reqTime = new Date();
     const hashedToken = hashToken(rawToken);
     const oldTokenDoc = await RefreshToken.findOneAndUpdate(
       {
@@ -47,19 +49,40 @@ export const rotateRefreshToken = async (rawToken, ip, userAgent) => {
         revoked: false,
         expiresAt: { $gt: new Date() },
       },
-      { revoked: true },
+      {
+        $set: {
+          revoked: true,
+          revokedAt: new Date(),
+        },
+      },
       { new: false },
     );
     if (!oldTokenDoc) {
       const mayBeStolen = await RefreshToken.findOne({
         tokenHash: hashedToken,
       });
+
       if (!mayBeStolen) {
         throw new Error("Invalid Refresh Token");
       }
-      if(mayBeStolen.revoked){
-        await RefreshToken.updateMany({family:mayBeStolen.family},{revoked:true});
-        throw new Error("Session invalidated — please log in again")
+      if (mayBeStolen.revoked && reqTime - mayBeStolen.revokedAt <= GRACE_PERIOD_MS) {
+        const newRawToken = await issueRefreshToken(
+          mayBeStolen.user,
+          mayBeStolen.family,
+          ip,
+          userAgent,
+        );
+        return { rawToken: newRawToken, userId: mayBeStolen.user };
+      }
+      if (mayBeStolen.revoked) {
+        await RefreshToken.updateMany(
+          { family: mayBeStolen.family },
+          { $set:{
+              revoked: true,
+              revokedAt:reqTime
+          } },
+        );
+        throw new Error("Session invalidated — please log in again");
       }
       // exists, not revoked, but still didn't match the atomic filter → must be expired
       throw new Error("Refresh Token Expired — please log in again");
