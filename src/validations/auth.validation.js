@@ -39,3 +39,18 @@ export const completeDesignationSchema = z.object({
     forestBlock:z.string().trim().min(1,"Block name is required").max(50,"Must be under 50 characters"),
     forestRange:z.string().trim().min(1,"Range name is required").max(50,"Must be under 50 characters"),
 });
+
+export const dobUpdateSchema = z.object({
+    dob: z.coerce
+        .date({ errorMap: () => ({ message: "Enter a valid date of birth" }) })
+        .max(new Date(), "Date of birth can't be in the future")
+        .refine((date) => {
+            const now = new Date();
+            let age = now.getFullYear() - date.getFullYear();
+            const monthDiff = now.getMonth() - date.getMonth();
+            if (monthDiff < 0 || (monthDiff === 0 && now.getDate() < date.getDate())) {
+                age--;
+            }
+            return age >= 18;
+        }, "You must be at least 18 years old"),
+});
