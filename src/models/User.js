@@ -4,8 +4,8 @@ const userSchema = new mongoose.Schema({
   name: { type: String, required: true },
   username: {
     type: String,
-    unique:true,
-    sparse:true,
+    unique: true,
+    sparse: true,
     trim: true,
     lowercase: true,
   },
@@ -38,6 +38,15 @@ const userSchema = new mongoose.Schema({
   passwordChangedAt: { type: Date },
   loginAttempts: { type: Number, default: 0 },
   lockUntil: { type: Date },
+  designation: {
+    type: String,
+    enum: ["Van Mitra", "Forest Guard", "Forest Worker", "Others"],
+  },
+  usualTourStart: { type: String, trim: true },
+  beatName: { type: String, trim: true },
+  forestBlock: { type: String, trim: true },
+  forestRange: { type: String, trim: true },
+  profileCompleted: { type: Boolean, default: false },
   createdAt: { type: Date, default: Date.now },
 });
 

@@ -16,6 +16,12 @@ const envSchema = z.object({
     EMAIL_FROM: z.string().min(1),
     EMAIL_VERIFICATION_EXPIRY: z.string().default("24h"),
     PASSWORD_RESET_EXPIRY: z.string(),
+    RAZORPAY_KEY_ID: z.string().min(1),
+    RAZORPAY_KEY_SECRET: z.string().min(1),
+    RAZORPAY_WEBHOOK_SECRET:z.string().min(1),
+    CLOUDINARY_CLOUD_NAME:z.string().min(1),
+    CLOUDINARY_API_KEY:z.string().min(1),
+    CLOUDINARY_API_SECRET:z.string().min(1),
 });
 const parsed = envSchema.safeParse(process.env);
 if(!parsed.success){
@@ -37,3 +43,9 @@ export const smtpPass = parsed.data.SMTP_PASS;
 export const emailFrom = parsed.data.EMAIL_FROM;
 export const emailVerificationExpiry = parsed.data.EMAIL_VERIFICATION_EXPIRY;
 export const passwordResetExpiryTime = parsed.data.PASSWORD_RESET_EXPIRY;
+export const razorPayApiKey = parsed.data.RAZORPAY_KEY_ID;
+export const razorPaySecret = parsed.data.RAZORPAY_KEY_SECRET;
+export const razorpaWebhookSecret=parsed.data.RAZORPAY_WEBHOOK_SECRET;
+export const cloudinaryCloud = parsed.data.CLOUDINARY_CLOUD_NAME;
+export const cloudinaryApiKey = parsed.data.CLOUDINARY_API_KEY;
+export const cloudinarySecret = parsed.data.CLOUDINARY_API_SECRET;
