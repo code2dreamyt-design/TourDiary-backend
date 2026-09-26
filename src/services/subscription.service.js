@@ -72,3 +72,7 @@ export const applySuccessfulPayment = async ( { userId, plan, provider, provider
         await session.endSession();
     }
 }
+export const getPaidUntil = async (userId) => {
+  const subscription = await Subscription.findOne({ user: userId });
+  return subscription?.paidUntil ?? null;
+};

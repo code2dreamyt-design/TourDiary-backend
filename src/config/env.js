@@ -22,6 +22,8 @@ const envSchema = z.object({
     CLOUDINARY_CLOUD_NAME:z.string().min(1),
     CLOUDINARY_API_KEY:z.string().min(1),
     CLOUDINARY_API_SECRET:z.string().min(1),
+    ENTITLEMENT_PRIVATE_KEY: z.string().min(1),
+    ENTITLEMENT_PUBLIC_KEY: z.string().min(1),
 });
 const parsed = envSchema.safeParse(process.env);
 if(!parsed.success){
@@ -49,3 +51,5 @@ export const razorpaWebhookSecret=parsed.data.RAZORPAY_WEBHOOK_SECRET;
 export const cloudinaryCloud = parsed.data.CLOUDINARY_CLOUD_NAME;
 export const cloudinaryApiKey = parsed.data.CLOUDINARY_API_KEY;
 export const cloudinarySecret = parsed.data.CLOUDINARY_API_SECRET;
+export const entitlementPrivateKey = Buffer.from(parsed.data.ENTITLEMENT_PRIVATE_KEY, "base64").toString("utf8");
+export const publicPaidUntilKey = parsed.data.ENTITLEMENT_PUBLIC_KEY.replace(/\\n/g, "\n");

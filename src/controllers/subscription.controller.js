@@ -1,13 +1,18 @@
 import { razorPayApiKey } from "../config/env.js";
 import PLAN from "../config/plan.js";
 import razorpay from "../config/razorpay.js";
-import { hasActiveSubscription } from "../services/subscription.service.js";
+import { signEntitlement } from "../services/entitlement.service.js";
+import { getPaidUntil, hasActiveSubscription } from "../services/subscription.service.js";
 
 export const getSubscriptionStatus = async (req, res) => {
   try {
     const userId = req.userId;
-    const isActive = await hasActiveSubscription(userId);
-    return res.status(200).json({ active: isActive });
+    const [isActive, paidUntil] = await Promise.all([
+      hasActiveSubscription(userId),
+      getPaidUntil(userId),
+    ]);
+    const entitlement = signEntitlement(userId, paidUntil);
+    return res.status(200).json({ active: isActive,entitlement });
   } catch (error) {
     console.log(error);
     return res.status(500).json({ message: "Internal Server Error" });
