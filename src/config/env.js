@@ -9,10 +9,6 @@ const envSchema = z.object({
     JWT_ACCESS_EXPIRY:z.string().default("15m"),
     JWT_REFRESH_EXPIRY: z.string().default("30d"),
     CLIENT_URL: z.string().url(),
-    SMTP_HOST: z.string().min(1),
-    SMTP_PORT: z.string().default("587"),
-    SMTP_USER: z.string().min(1),
-    SMTP_PASS: z.string().min(1),
     EMAIL_FROM: z.string().min(1),
     EMAIL_VERIFICATION_EXPIRY: z.string().default("24h"),
     PASSWORD_RESET_EXPIRY: z.string(),
@@ -40,10 +36,6 @@ export const seceretKey = parsed.data.JWT_ACCESS_SECRET;
 export const accessExpiry = parsed.data.JWT_ACCESS_EXPIRY;
 export const refreshExpiry = parsed.data.JWT_REFRESH_EXPIRY;
 export const clientUrl = parsed.data.CLIENT_URL;
-export const smtpHost = parsed.data.SMTP_HOST;
-export const smtpPort = parsed.data.SMTP_PORT;
-export const smtpUser = parsed.data.SMTP_USER;
-export const smtpPass = parsed.data.SMTP_PASS;
 export const emailFrom = parsed.data.EMAIL_FROM;
 export const emailVerificationExpiry = parsed.data.EMAIL_VERIFICATION_EXPIRY;
 export const passwordResetExpiryTime = parsed.data.PASSWORD_RESET_EXPIRY;

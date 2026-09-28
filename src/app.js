@@ -1,4 +1,6 @@
 import express from "express";
+import path from "path";
+import { fileURLToPath } from "url";
 import authRoute from "./routes/auth.routes.js";
 import rateLimit from "express-rate-limit";
 import helmet from "helmet";
@@ -10,6 +12,8 @@ import subscriptionRouter from "./routes/subscription.routes.js";
 import webhookRouter from "./routes/webhooks.route.js";
 import userRouter from "./routes/user.routes.js";
 import deeplinkRouter from "./routes/deeplink.routes.js";
+
+const publicDir = path.join(path.dirname(fileURLToPath(import.meta.url)), "..", "public");
 
 const app = express();
 if (nodeEnv === "production") {
@@ -36,6 +40,8 @@ app.use(express.json());
 app.use(sanitizeBody);
 app.use(hpp());
 
+// Public landing + policy pages (index, /terms, /privacy, /refund, /contact)
+app.use(express.static(publicDir, { extensions: ["html"] }));
 app.use("/", deeplinkRouter);
 app.get("/health", (req, res) => res.status(200).json({ status: "ok" }));
 app.use("/api/auth", globalRateLimit);
