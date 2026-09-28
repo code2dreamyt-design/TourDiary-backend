@@ -24,6 +24,8 @@ const envSchema = z.object({
     CLOUDINARY_API_SECRET:z.string().min(1),
     ENTITLEMENT_PRIVATE_KEY: z.string().min(1),
     ENTITLEMENT_PUBLIC_KEY: z.string().min(1),
+    BREVO_API_KEY:z.string().min(1),
+    EMAIL_FROM_NAME:z.string().min(1),
 });
 const parsed = envSchema.safeParse(process.env);
 if(!parsed.success){
@@ -53,3 +55,5 @@ export const cloudinaryApiKey = parsed.data.CLOUDINARY_API_KEY;
 export const cloudinarySecret = parsed.data.CLOUDINARY_API_SECRET;
 export const entitlementPrivateKey = Buffer.from(parsed.data.ENTITLEMENT_PRIVATE_KEY, "base64").toString("utf8");
 export const publicPaidUntilKey = parsed.data.ENTITLEMENT_PUBLIC_KEY.replace(/\\n/g, "\n");
+export const brevoApiKey = parsed.data.BREVO_API_KEY;
+export const emailFromName = parsed.data.EMAIL_FROM_NAME;
