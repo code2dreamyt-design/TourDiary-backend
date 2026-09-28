@@ -1,6 +1,7 @@
 body{font-family:-apple-system,Roboto,Arial,sans-serif;background:#F7F8F6;color:#1E2620;margin:0;line-height:1.6}
 header{background:#2E5339;padding:14px 20px;display:flex;flex-wrap:wrap;gap:8px 20px;align-items:center}
 header a{color:#fff;text-decoration:none;font-size:14px}
+header nav{display:flex;flex-wrap:wrap;gap:8px 18px}
 header .brand{font-weight:700;font-size:18px;margin-right:auto}
 main{max-width:760px;margin:0 auto;padding:28px 20px}
 h1{color:#2E5339;font-size:28px;margin:0 0 12px}
