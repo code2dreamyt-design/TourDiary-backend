@@ -9,6 +9,7 @@ import { clientUrl, nodeEnv } from "./config/env.js";
 import subscriptionRouter from "./routes/subscription.routes.js";
 import webhookRouter from "./routes/webhooks.route.js";
 import userRouter from "./routes/user.routes.js";
+import deeplinkRouter from "./routes/deeplink.routes.js";
 
 const app = express();
 if (nodeEnv === "production") {
@@ -34,6 +35,9 @@ app.use("/webhooks/razorpay",express.raw({type:"application/json"}),webhookRoute
 app.use(express.json());
 app.use(sanitizeBody);
 app.use(hpp());
+
+app.use("/", deeplinkRouter);
+app.get("/health", (req, res) => res.status(200).json({ status: "ok" }));
 app.use("/api/auth", globalRateLimit);
 app.use("/api/auth", authRoute);
 app.use("/api/subscription",subscriptionRateLimit);
