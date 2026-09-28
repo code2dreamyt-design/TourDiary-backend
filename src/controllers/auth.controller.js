@@ -281,10 +281,10 @@ export const resendEmail = async (req, res) => {
         .json({ message: "Daily email limit reached. Try again later." });
     }
 
-    await sendVerificationEmail(updated, newVerificationToken);
+    sendVerificationEmail(updated, newVerificationToken);
     return res.status(200).json({ message: "Verification email sent" });
   } catch (error) {
-    console.log(error.message);
+    console.log(error);
     return res.status(500).json({ message: "Internal Server Error" });
   }
 };

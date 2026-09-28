@@ -13,14 +13,14 @@ const transporter = nodemailer.createTransport({
   secure: Number(smtpPort) === 465,
   auth: { user: smtpUser, pass: smtpPass },
 });
+transporter
+  .verify()
+  .then(() => console.log("SMTP ready:", smtpHost, smtpPort))
+  .catch((err) => console.log("SMTP verify failed:", err.message));
 export const sendEmail = async ({ to, subject, html }) => {
   try {
-    await transporter.sendMail({
-      from: emailFrom,
-      to,
-      subject,
-      html,
-    });
+    const info = await transporter.sendMail({ from: emailFrom, to, subject, html });
+    console.log("Email sent:", info.messageId, "to", to);
   } catch (error) {
     console.log("Email send failed:", error.message);
     throw error;
