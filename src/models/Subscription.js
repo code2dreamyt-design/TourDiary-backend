@@ -13,7 +13,7 @@ const subscriptionSchema = new mongoose.Schema({
         required:true,
     },
     paidUntil:{type:Date,required:true},
-    provider:{type:String,required:true,enum:["razorpay"]}
+    provider:{type:String,required:true,enum:["razorpay","trial"]}
 },
 { timestamps: true }
 );
