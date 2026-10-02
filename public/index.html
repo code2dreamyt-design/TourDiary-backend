@@ -2,35 +2,399 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Forest App</title>
-<link rel="stylesheet" href="/style.css">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Forest App — The field diary for forest staff</title>
+<meta name="description" content="Forest App is a tour diary for Van Mitras, Forest Guards and Forest Workers. Daily From / To / Remarks entries, GPS-stamped photos, a TD calculator and one-tap Word export. Free for 30 days for early joiners.">
+<meta name="theme-color" content="#06130c">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Forest App — The field diary for forest staff">
+<meta property="og:description" content="Tour diary, GPS-stamped photos, TD calculator and Word export. Download the Android app — 30 days free for early joiners.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%2040%2040%22%3E%3Crect%20width=%2240%22%20height=%2240%22%20rx=%2212%22%20fill=%22%2312301f%22/%3E%3Cpath%20d=%22M20%206l8%2010h-4l6%208h-5l5%207H10l5-7h-5l6-8h-4z%22%20fill=%22%237fd1a0%22/%3E%3Crect%20x=%2218.4%22%20y=%2230%22%20width=%223.2%22%20height=%225%22%20rx=%221%22%20fill=%22%23d0a85c%22/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
+<link rel="stylesheet" href="/landing.css">
+<script src="/landing.js"></script>
 </head>
 <body>
-<header><a class="brand" href="/">Forest App</a><nav><a href="/">Home</a><a href="/terms">Terms</a><a href="/privacy">Privacy</a><a href="/refund">Refunds &amp; Cancellation</a><a href="/contact">Contact</a></nav></header>
+<canvas id="forest" aria-hidden="true"></canvas>
+
+<!-- ============ NAV ============ -->
+<header class="nav">
+  <div class="wrap nav-in">
+    <a class="brand" href="/" aria-label="Forest App home">
+      <svg viewBox="0 0 40 40" aria-hidden="true"><defs><linearGradient id="lg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#bff0cf"/><stop offset="1" stop-color="#2f7d50"/></linearGradient></defs><rect width="40" height="40" rx="12" fill="#12301f"/><path d="M20 6l8 10h-4l6 8h-5l5 7H10l5-7h-5l6-8h-4z" fill="url(#lg)"/><rect x="18.4" y="30" width="3.2" height="5" rx="1" fill="#d0a85c"/></svg>
+      Forest App
+    </a>
+    <nav class="nav-links" id="menu" aria-label="Main">
+      <a href="#features">Features</a>
+      <a href="#how">How it works</a>
+      <a href="#install">Install</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+    <a class="btn sm" href="#install">Download</a>
+    <button class="burger" type="button" aria-label="Menu" aria-controls="menu" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+  </div>
+</header>
+
 <main>
+<!-- ============ HERO ============ -->
+<section class="hero" id="top">
+  <div class="wrap hero-grid">
+    <div>
+      <a class="offer-pill" href="#offer" data-offer><span class="pulse-dot"></span>Launch offer: 30 days free <b data-cd="short">&nbsp;</b></a>
+      <h1>
+        <span class="line"><span>The field diary</span></span>
+        <span class="line"><span>built for the <span class="grad">forest.</span></span></span>
+      </h1>
+      <p class="lead">Forest App is made for Van Mitras, Forest Guards and Forest Workers. Write your daily tour entries, snap GPS-stamped photos, calculate timber volumes, and export the whole month as a Word document, right from your phone.</p>
+      <div class="hero-cta">
+        <a class="btn shine" href="https://github.com/justapahadi/Forest-App-Release/releases/download/v1.3.0/ForestApp.apk" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12m0 0l-4.5-4.5M12 15l4.5-4.5M4 20h16"/></svg>
+          Download for Android
+        </a>
+        <a class="btn ghost" href="#features">See what's inside</a>
+      </div>
+      <div class="hero-meta">
+        <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7"/></svg>Version 1.3.0</span>
+        <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7"/></svg>Direct APK, no Play Store needed</span>
+        <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7"/></svg>Data stays on your phone</span>
+      </div>
+    </div>
 
-<h1>Forest App</h1>
-<p class="lead">A field-work diary app for forest staff such as Van Mitras, Forest Guards and Forest Workers. Keep daily tour entries, attach GPS-stamped photos, and export a completed month as a Word document.</p>
-<h2>What you get</h2>
-<ul>
-<li>Monthly tour diary with daily From / To / Remarks entries</li>
-<li>Camera with GPS and time stamped photos</li>
-<li>Word (.docx) export of a completed month</li>
-<li>Your profile, saved to your account</li>
-</ul>
-<h2>Pricing</h2>
-<p>Forest App is available through a paid subscription, billed in Indian Rupees (INR). Payment is made in advance for the chosen period and does not renew automatically.</p>
-<table>
-<tr><th>Plan</th><th>Price</th><th>Duration</th></tr>
-<tr><td>Monthly</td><td>&#8377;59</td><td>30 days</td></tr>
-<tr><td>Yearly</td><td>&#8377;599</td><td>365 days</td></tr>
-</table>
-<p>Payments are processed securely by Razorpay. After a successful payment, the subscription is activated on your account, normally within minutes.</p>
-<h2>Policies</h2>
-<p><a href="/terms">Terms &amp; Conditions</a> &middot; <a href="/privacy">Privacy Policy</a> &middot; <a href="/refund">Cancellation &amp; Refund Policy</a> &middot; <a href="/contact">Contact Us</a></p>
+    <div class="stage" aria-hidden="true">
+      <div class="phone">
+        <div class="screen-clip">
+          <div class="screen active">
+            <div class="app-top"><div class="app-bar">Tour Diary <small>October 2026</small></div></div>
+            <div class="progress" style="--w:68%"><i></i></div>
+            <div class="chips"><span class="on">1</span><span>4</span><span>7</span><span>10</span><span>13</span><span>16</span></div>
+            <div class="entry"><b>Mon, 05 Oct <em>Done</em></b><p class="route">Range Office → Beat 4, Khalawan</p><p>Patrolling and boundary pillar check.</p></div>
+            <div class="entry"><b>Tue, 06 Oct <em>Done</em></b><p class="route">Beat 4 → Kandi Nala</p><p>Checked felling area, noted fresh stumps.</p></div>
+            <div class="entry empty"><b>Wed, 07 Oct</b><p>Tap to add today's entry</p></div>
+          </div>
+        </div>
+      </div>
+      <div class="float f1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s7-6.2 7-12a7 7 0 0 0-14 0c0 5.8 7 12 7 12z"/><circle cx="12" cy="10" r="2.5"/></svg><div>GPS stamped<small>Location + time on every photo</small></div></div>
+      <div class="float f2"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M8 13h8M8 17h8"/></svg><div>Word export<small>One tap when 100% complete</small></div></div>
+      <div class="float f3"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="2" width="16" height="20" rx="2"/><path d="M8 6h8M8 11h.01M12 11h.01M16 11h.01M8 15h.01M12 15h.01M16 15h.01"/></svg><div>TD calculator<small>Exact volume maths</small></div></div>
+    </div>
+  </div>
+  <div class="scroll-cue" aria-hidden="true"></div>
+</section>
 
+<!-- ============ STRIP ============ -->
+<section class="strip">
+  <div class="wrap strip-grid">
+    <div class="glass stat rv"><strong data-count="3">3</strong><span>entries per screen, jump pages with one tap</span></div>
+    <div class="glass stat rv"><strong>GPS</strong><span>and time burned into every photo</span></div>
+    <div class="glass stat rv"><strong>.docx</strong><span>ready-to-sign Word export</span></div>
+    <div class="glass stat rv"><strong>₹59</strong><span>per month, or ₹599 a year</span></div>
+  </div>
+</section>
+
+<!-- ============ LAUNCH OFFER ============ -->
+<section id="offer" data-offer>
+  <div class="wrap">
+    <div class="offer glass rv">
+      <span class="eyebrow">Launch offer for early joiners</span>
+      <h2>Your first <span class="grad">30 days are free.</span></h2>
+      <p class="sub">Download Forest App and create your account before the timer ends, and we'll give you a full month of access on us. No payment, no card, nothing to cancel.</p>
+      <div class="count" role="timer" aria-label="Time left for the launch offer">
+        <div><strong data-cd="d">00</strong><span>Days</span></div>
+        <div><strong data-cd="h">00</strong><span>Hours</span></div>
+        <div><strong data-cd="m">00</strong><span>Minutes</span></div>
+        <div><strong data-cd="s">00</strong><span>Seconds</span></div>
+      </div>
+      <ol class="offer-steps">
+        <li>Install the app and sign up</li>
+        <li>Verify your email (the link is sent at signup)</li>
+        <li>Tap <b>&nbsp;Claim&nbsp;</b> on the banner at the top of Home</li>
+      </ol>
+      <a class="btn gold shine" href="#install">Get the app and claim it</a>
+      <p class="fine" style="color:#cdbf97">Offer ends 9 October, 11:59 PM IST. Claim it before the timer reaches zero. One free trial per account.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FEATURES ============ -->
+<section id="features">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <span class="eyebrow">Everything in one app</span>
+      <h2>Made for the way <span class="grad">forest work really goes</span></h2>
+      <p>No paper registers, no lost photos, no last-minute rewriting. Every feature exists because field staff asked for it.</p>
+    </div>
+    <div class="bento">
+      <article class="card glass c-a rv">
+        <div class="ico"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></div>
+        <h3>Monthly tour diary</h3>
+        <p>A diary for every month, created for you on first open. Fill in From, To and Remarks day by day.</p>
+        <ul>
+          <li>3 entries per screen with a quick page-jump strip</li>
+          <li>Edit any entry later, it updates in place, never duplicates</li>
+          <li>Missed a day? It stays empty until you fill it</li>
+          <li>Progress bar and completion % for every month</li>
+        </ul>
+      </article>
+      <article class="card glass c-b rv">
+        <div class="ico"><svg viewBox="0 0 24 24"><path d="M14.5 4h-5L8 6H5a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-3z"/><circle cx="12" cy="13" r="3.5"/></svg></div>
+        <h3>GPS &amp; time-stamped camera</h3>
+        <p>A built-in camera that proves where and when. Location and time are burned onto the photo itself.</p>
+        <ul>
+          <li>Live preview with GPS and time overlay, flash and flip</li>
+          <li>Add an optional note that is stamped on the photo</li>
+          <li>Retake instantly, or attach it to today's diary entry</li>
+          <li>Saved straight to your phone's Gallery</li>
+        </ul>
+      </article>
+      <article class="card glass c-c rv">
+        <div class="ico"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M8 13h8M8 17h8M8 9h2"/></svg></div>
+        <h3>One-tap Word export</h3>
+        <p>When a month is 100% complete, download it as a neat .docx with title, entries table and the right signature block for your designation.</p>
+      </article>
+      <article class="card glass c-d rv">
+        <div class="ico"><svg viewBox="0 0 24 24"><rect x="4" y="2" width="16" height="20" rx="2"/><path d="M8 6h8M8 11h.01M12 11h.01M16 11h.01M8 15h.01M12 15h.01M16 15h.01M8 19h.01M12 19h4"/></svg></div>
+        <h3>TD calculator <span class="tag">New</span></h3>
+        <p>Record TD and seized timber: trees, sizes and quantities in three simple steps, with live volumes and a conversion-limit check.</p>
+      </article>
+      <article class="card glass c-e rv">
+        <div class="ico"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg></div>
+        <h3>Your profile, remembered</h3>
+        <p>Set your name, designation, beat, block and range once. Your usual starting place pre-fills every new entry.</p>
+      </article>
+      <article class="card glass c-f rv">
+        <div class="ico"><svg viewBox="0 0 24 24"><rect x="4" y="2" width="16" height="20" rx="2"/><path d="M8 6h8M8 11h.01M12 11h.01M16 11h.01"/></svg></div>
+        <h3>Exact timber arithmetic</h3>
+        <ul>
+          <li>Two record types: TD (with marking number and paid / free-grant status) and Seized timber</li>
+          <li>Exact 3-decimal volumes, row totals and conversion % calculated for you</li>
+          <li>Recent compartments offered as one-tap suggestions</li>
+          <li>Export a single record or a whole batch by date range</li>
+        </ul>
+      </article>
+      <article class="card glass c-g rv">
+        <div class="ico"><svg viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/></svg></div>
+        <h3>Safe, simple, yours</h3>
+        <ul>
+          <li>Diary entries and photos live on your phone, not on someone else's server</li>
+          <li>Verified email accounts with secure password reset</li>
+          <li>Pay securely by Razorpay in INR, no auto-renewal surprises</li>
+          <li>Saved records are always viewable, even if your subscription ends</li>
+        </ul>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SHOWCASE ============ -->
+<section id="showcase">
+  <div class="wrap demo">
+    <div>
+      <div class="sec-head rv" style="text-align:left;margin:0 0 28px">
+        <span class="eyebrow">See it in action</span>
+        <h2>From the beat to the <span class="grad">paperwork</span>, in your pocket</h2>
+      </div>
+      <div class="tabs" role="tablist" aria-label="App screens">
+        <button class="tab on" type="button" role="tab"><strong>Write your diary</strong><span>Quick entries, progress at a glance.</span><i class="bar"></i></button>
+        <button class="tab" type="button" role="tab"><strong>Capture proof</strong><span>Photos stamped with GPS and time.</span><i class="bar"></i></button>
+        <button class="tab" type="button" role="tab"><strong>Calculate timber</strong><span>Volumes and limits worked out for you.</span><i class="bar"></i></button>
+        <button class="tab" type="button" role="tab"><strong>Export &amp; submit</strong><span>A finished Word document, one tap.</span><i class="bar"></i></button>
+      </div>
+    </div>
+    <div class="stage" aria-hidden="true">
+      <div class="phone">
+        <div class="screen-clip">
+          <!-- diary -->
+          <div class="screen">
+            <div class="app-top"><div class="app-bar">My Diaries <small>3 diaries</small></div></div>
+            <div class="entry"><b>October 2026 <em>68%</em></b><div class="progress" style="--w:68%"><i></i></div></div>
+            <div class="entry"><b>September 2026 <em>Done</em></b><div class="progress" style="--w:100%"><i></i></div><p style="margin-top:8px">Completed, ready to download</p></div>
+            <div class="entry"><b>August 2026 <em>Done</em></b><div class="progress" style="--w:100%"><i></i></div></div>
+            <div class="dl-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12m0 0l-4-4m4 4l4-4M4 21h16"/></svg>Download September</div>
+          </div>
+          <!-- camera -->
+          <div class="screen" style="padding:0">
+            <div class="cam">
+              <svg class="trees" viewBox="0 0 300 400" preserveAspectRatio="xMidYMax slice"><g fill="#0b2a1e"><path d="M60 400V250l-30 0 40-70-26 0 36-60 36 60-26 0 40 70-30 0v150z"/><path d="M230 400V230l-38 0 50-90-32 0 46-80 46 80-32 0 50 90-38 0v170z" fill="#0e3626"/><path d="M150 400V300l-20 0 28-50-18 0 24-44 24 44-18 0 28 50-20 0v100z" fill="#07180f"/></g></svg>
+              <div class="grid-l"></div><div class="focus"></div>
+              <div class="stamp"><b>Beat 4, Khalawan</b>31.1048° N, 77.1734° E · 07 Oct 2026, 10:42 AM<br>Fresh stumps near nala</div>
+              <div class="shutter-row"><div class="cam-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L4 14h7l-1 8 9-12h-7z"/></svg></div><div class="shutter"></div><div class="cam-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 0 1 15-6.7L21 8M21 3v5h-5M21 12a9 9 0 0 1-15 6.7L3 16M3 21v-5h5"/></svg></div></div>
+            </div>
+          </div>
+          <!-- TD -->
+          <div class="screen">
+            <div class="app-top"><div class="app-bar">TD Calculator <small>Records</small></div></div>
+            <div class="chips"><span class="on">TD</span><span>Seized timber</span></div>
+            <div class="entry"><b>Ramesh Kumar <em>Within limit</em></b><p>Khalawan · M.No. 12,13 / 2025</p>
+              <div class="td-stats"><div>STANDING<strong>2.145 m³</strong></div><div class="acc">CONVERTED<strong>1.378 m³</strong></div></div>
+              <div class="meter"><i></i></div><div class="meter-l"><span>Conversion 64.20%</span><span>Limit 65%</span></div></div>
+            <div class="entry"><b>Deodar · 2 sizes</b><p>L × W × T × Qty, totals worked out live as you type.</p></div>
+            <div class="dl-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>New TD</div>
+          </div>
+          <!-- export -->
+          <div class="screen">
+            <div class="app-top"><div class="app-bar">September 2026 <small>100%</small></div></div>
+            <div class="doc"><h5>TOUR DIARY · Van Mitra · Beat Khalawan</h5><div class="rows"><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="sig"><span>Van Mitra</span><span>Forest Guard I/C</span><span>Block Officer</span><span>Range Officer</span></div></div>
+            <div class="entry"><b>Ready to export <em>100%</em></b><p>Every day filled, so your Word document is ready.</p></div>
+            <div class="dl-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12m0 0l-4-4m4 4l4-4M4 21h16"/></svg>Download .docx</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ HOW IT WORKS ============ -->
+<section id="how">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <span class="eyebrow">Up and running in minutes</span>
+      <h2>How it <span class="grad">works</span></h2>
+    </div>
+    <div class="steps">
+      <div class="glass step rv"><h3>Install the app</h3><p>Download the APK from this page and install it on your Android phone. It takes about a minute.</p></div>
+      <div class="glass step rv"><h3>Create your account</h3><p>Sign up with your email. A verification link is sent straight away, so open it to confirm.</p></div>
+      <div class="glass step rv"><h3>Set up your profile</h3><p>Add your name, designation, beat, block and range once. The app uses them everywhere.</p></div>
+      <div class="glass step rv"><h3>Work, capture, export</h3><p>Fill your diary, take stamped photos, record timber, and export when the month is complete.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ INSTALL ============ -->
+<section id="install">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <span class="eyebrow">Android install guide</span>
+      <h2>Install Forest App in <span class="grad">4 easy steps</span></h2>
+      <p>The app is installed directly from an APK file. Follow these steps once and you're done.</p>
+    </div>
+    <div class="install">
+      <div class="glass ins-steps rv">
+        <ol>
+          <li><div><h3>Download the APK</h3><p>Tap <b>Download Forest App</b> (or scan the QR code from another device). Your phone saves <b>ForestApp.apk</b> in Downloads.</p></div></li>
+          <li><div><h3>Allow installation from this source</h3><p>When Android asks, open <b>Settings</b> and switch on <b>Allow from this source</b> for your browser or Files app. You can switch it off again afterwards.</p></div></li>
+          <li><div><h3>Open the file and tap Install</h3><p>Open <b>ForestApp.apk</b> from your notifications or Downloads folder and tap <b>Install</b>, then <b>Open</b>.</p></div></li>
+          <li><div><h3>Sign up and allow permissions</h3><p>Create your account, verify your email, and allow Camera, Location and Photos access when the app asks, so GPS-stamped photos work.</p></div></li>
+        </ol>
+        <div class="note"><b>Security prompt?</b> Because the app is installed from an APK and not from the Play Store, Android or Play Protect may show a warning. If you downloaded it from this page, choose <b>More details → Install anyway</b>.</div>
+        <p class="links-s">Updating? Download the newest APK from this page and install it over the old one. &nbsp;·&nbsp; <a href="https://github.com/justapahadi/Forest-App-Release/releases/tag/v1.3.0" rel="noopener">Release page &amp; notes</a></p>
+      </div>
+      <aside class="glass dl-card rv">
+        <div class="qr" aria-label="QR code to download Forest App"><svg viewBox="0 0 41 41" ><path fill="#fff" d="M0 0h41v41h-41z"/><path class="qrline" stroke="#06130c" d="M0 0.5h7m1 0h1m1 0h2m1 0h2m6 0h2m1 0h1m1 0h1m1 0h3m3 0h7m-41 1h1m5 0h1m2 0h1m3 0h6m1 0h1m3 0h3m5 0h1m1 0h1m5 0h1m-41 1h1m1 0h3m1 0h1m1 0h1m2 0h2m1 0h3m1 0h1m2 0h1m2 0h1m1 0h2m1 0h2m3 0h1m1 0h3m1 0h1m-41 1h1m1 0h3m1 0h1m2 0h1m4 0h1m1 0h1m1 0h3m5 0h1m1 0h1m3 0h1m1 0h1m1 0h3m1 0h1m-41 1h1m1 0h3m1 0h1m2 0h1m2 0h1m1 0h1m2 0h2m6 0h2m2 0h2m3 0h1m1 0h3m1 0h1m-41 1h1m5 0h1m1 0h2m3 0h1m1 0h1m4 0h3m2 0h1m3 0h2m1 0h1m1 0h1m5 0h1m-41 1h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7m-29 1h4m2 0h3m1 0h1m1 0h1m5 0h1m1 0h1m-33 1h1m1 0h1m3 0h2m3 0h1m1 0h1m1 0h1m4 0h1m3 0h1m1 0h3m2 0h2m2 0h1m2 0h1m1 0h1m-39 1h2m1 0h1m1 0h1m2 0h1m1 0h3m3 0h3m2 0h1m3 0h2m2 0h2m1 0h1m3 0h1m-38 1h2m1 0h3m1 0h3m2 0h1m4 0h4m1 0h1m1 0h3m2 0h2m5 0h2m1 0h1m-41 1h1m1 0h1m2 0h1m1 0h1m1 0h4m2 0h1m4 0h1m1 0h1m1 0h1m3 0h1m1 0h3m1 0h1m2 0h1m-38 1h3m3 0h2m1 0h1m4 0h2m3 0h1m4 0h1m1 0h2m4 0h1m1 0h3m3 0h1m-41 1h1m1 0h4m2 0h1m2 0h2m2 0h1m5 0h1m2 0h2m3 0h2m3 0h2m4 0h1m-38 1h1m1 0h2m1 0h1m1 0h1m2 0h1m1 0h2m1 0h2m4 0h1m2 0h1m3 0h1m1 0h2m3 0h1m1 0h1m-39 1h1m2 0h1m1 0h3m1 0h1m2 0h1m8 0h2m1 0h1m4 0h1m1 0h5m1 0h1m-40 1h1m3 0h1m1 0h1m2 0h8m2 0h2m1 0h1m4 0h2m4 0h2m2 0h1m2 0h1m-41 1h2m1 0h1m3 0h2m3 0h4m3 0h5m2 0h4m1 0h5m4 0h1m-40 1h1m1 0h1m2 0h3m1 0h2m3 0h6m2 0h5m3 0h1m2 0h3m1 0h1m1 0h1m-38 1h3m2 0h2m1 0h1m1 0h4m1 0h4m1 0h2m1 0h1m2 0h1m1 0h2m1 0h1m2 0h1m-38 1h1m2 0h1m2 0h3m1 0h1m3 0h1m1 0h6m2 0h4m1 0h1m2 0h1m1 0h2m3 0h1m-39 1h4m2 0h1m3 0h1m1 0h1m2 0h1m1 0h2m1 0h1m1 0h7m1 0h2m1 0h1m5 0h1m-41 1h1m2 0h1m2 0h1m2 0h3m1 0h1m1 0h1m1 0h3m2 0h2m3 0h1m1 0h4m2 0h2m1 0h1m1 0h1m-38 1h2m3 0h7m1 0h1m3 0h1m3 0h1m5 0h2m1 0h2m2 0h1m-38 1h2m2 0h1m1 0h1m2 0h1m5 0h1m3 0h1m3 0h2m2 0h1m3 0h2m1 0h1m4 0h1m-36 1h2m2 0h3m3 0h1m1 0h1m2 0h2m1 0h4m1 0h2m1 0h2m2 0h2m1 0h1m1 0h2m-38 1h4m1 0h1m1 0h1m1 0h3m2 0h1m1 0h1m1 0h3m1 0h1m1 0h3m1 0h1m1 0h2m1 0h3m1 0h1m-41 1h3m1 0h1m2 0h2m1 0h2m2 0h1m3 0h2m2 0h3m1 0h1m4 0h3m1 0h1m1 0h1m1 0h2m-41 1h3m1 0h1m1 0h2m1 0h1m1 0h2m1 0h2m3 0h2m4 0h1m2 0h1m1 0h1m1 0h1m1 0h2m3 0h2m-38 1h2m2 0h1m1 0h2m3 0h3m3 0h1m1 0h1m3 0h1m1 0h2m1 0h4m2 0h1m2 0h1m-41 1h3m2 0h2m1 0h2m5 0h1m1 0h1m2 0h4m4 0h2m1 0h3m2 0h3m1 0h1m-39 1h3m4 0h4m2 0h1m2 0h3m6 0h2m5 0h1m1 0h2m-38 1h3m2 0h2m2 0h1m1 0h3m2 0h1m3 0h1m1 0h3m1 0h1m1 0h1m2 0h7m-30 1h1m1 0h6m1 0h2m1 0h1m2 0h1m1 0h4m3 0h1m3 0h1m3 0h1m-41 1h7m1 0h1m1 0h1m1 0h2m1 0h1m3 0h1m1 0h3m3 0h1m1 0h2m1 0h1m1 0h1m1 0h1m3 0h1m-41 1h1m5 0h1m2 0h3m1 0h2m2 0h1m1 0h2m1 0h1m2 0h1m1 0h2m1 0h3m3 0h2m1 0h1m-40 1h1m1 0h3m1 0h1m2 0h1m1 0h3m3 0h1m2 0h6m2 0h10m1 0h2m-41 1h1m1 0h3m1 0h1m3 0h1m1 0h1m3 0h2m1 0h2m1 0h3m3 0h1m1 0h1m4 0h2m2 0h1m-40 1h1m1 0h3m1 0h1m1 0h4m2 0h2m3 0h1m1 0h1m1 0h2m1 0h2m1 0h1m2 0h2m2 0h3m1 0h1m-41 1h1m5 0h1m3 0h1m1 0h1m1 0h2m1 0h1m1 0h1m2 0h2m2 0h1m1 0h1m2 0h4m2 0h1m-38 1h7m1 0h3m2 0h1m1 0h3m1 0h1m3 0h2m3 0h1m3 0h1m3 0h1m3 0h1"/></svg></div>
+        <h3>Forest App 1.3.0</h3>
+        <p>Android · Direct download<br>Scan with your phone or tap below.</p>
+        <a class="btn shine" href="https://github.com/justapahadi/Forest-App-Release/releases/download/v1.3.0/ForestApp.apk" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12m0 0l-4.5-4.5M12 15l4.5-4.5M4 20h16"/></svg>Download for Android</a>
+        <div class="perms">
+          <div class="perm"><svg viewBox="0 0 24 24"><path d="M14.5 4h-5L8 6H5a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-3z"/><circle cx="12" cy="13" r="3.5"/></svg><span><b>Camera</b> to take tour photos</span></div>
+          <div class="perm"><svg viewBox="0 0 24 24"><path d="M12 22s7-6.2 7-12a7 7 0 0 0-14 0c0 5.8 7 12 7 12z"/><circle cx="12" cy="10" r="2.5"/></svg><span><b>Location</b> (while using) to stamp GPS</span></div>
+          <div class="perm"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="1.6"/><path d="M21 16l-5-5-8 8"/></svg><span><b>Photos</b> to save pictures to your Gallery</span></div>
+        </div>
+        <p class="fine" style="margin-top:16px">iPhone version isn't available from this page.</p>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- ============ WHO ============ -->
+<section>
+  <div class="wrap">
+    <div class="sec-head rv">
+      <span class="eyebrow">Built for the field</span>
+      <h2>One app, <span class="grad">every role</span></h2>
+      <p>The Word export automatically uses the right signature block for your designation.</p>
+    </div>
+    <div class="who">
+      <div class="card glass rv"><div class="ico"><svg viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/></svg></div><h3>Van Mitra</h3><p>Own signature plus Forest Guard I/C, Block Officer and Range Officer.</p></div>
+      <div class="card glass rv"><div class="ico"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg></div><h3>Forest Guard</h3><p>Own signature plus Block Officer and Range Officer.</p></div>
+      <div class="card glass rv"><div class="ico"><svg viewBox="0 0 24 24"><path d="M12 3c4 3 6 6 6 9a6 6 0 0 1-12 0c0-3 2-6 6-9z"/><path d="M12 21v-9"/></svg></div><h3>Forest Worker</h3><p>Same trusted layout as Van Mitras, ready to submit.</p></div>
+      <div class="card glass rv"><div class="ico"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></div><h3>Others</h3><p>Field staff in other roles can keep the same neat monthly diary.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PRICING ============ -->
+<section id="pricing">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <span class="eyebrow">Simple pricing</span>
+      <h2>Pay once for the period, <span class="grad">no auto-renewal</span></h2>
+      <p>Both plans include every feature. Payment is made in advance in Indian Rupees, securely through Razorpay.</p>
+    </div>
+    <div class="plans">
+      <div class="glass plan rv">
+        <h3>Monthly</h3>
+        <div class="price"><sup>₹</sup>59 <small>/ 30 days</small></div>
+        <div class="save">&nbsp;</div>
+        <ul><li>Diary, camera, TD calculator and exports</li><li>Pay only when you need it</li><li>Add a month any time</li></ul>
+        <a class="btn ghost" href="#install">Start with the app</a>
+      </div>
+      <div class="glass plan best rv">
+        <span class="badge">Best value</span>
+        <h3>Yearly</h3>
+        <div class="price"><sup>₹</sup>599 <small>/ 365 days</small></div>
+        <div class="save">Save ₹109 compared to 12 monthly payments</div>
+        <ul><li>Everything in Monthly</li><li>One payment for the whole year</li><li>No renewal reminders to chase</li></ul>
+        <a class="btn shine" href="#install">Start with the app</a>
+      </div>
+    </div>
+    <p class="fine" data-offer>🎁 Early joiners get their first 30 days free. <a href="#offer">See the launch offer</a></p>
+    <p class="fine">Questions about payments? Read our <a href="/refund">Cancellation &amp; Refund Policy</a>.</p>
+  </div>
+</section>
+
+<!-- ============ FAQ ============ -->
+<section id="faq">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <span class="eyebrow">Good to know</span>
+      <h2>Frequently asked <span class="grad">questions</span></h2>
+    </div>
+    <div class="faq">
+      <details class="glass rv"><summary>Does it work without internet?</summary><div class="ans">Your diary entries and photos are stored on your phone, so you can keep working with weak or no signal in the forest. You need internet to sign up, verify your email and make payments.</div></details>
+      <details class="glass rv"><summary>How do I claim the 30-day free offer?</summary><div class="ans">Install the app and sign up before the offer ends. Open the verification link we email you, then tap <b>Claim</b> on the offer banner at the top of the Home screen. Your free month starts right away. If you haven't verified your email yet, the app will remind you.</div></details>
+      <details class="glass rv"><summary>Why does my phone show a security warning?</summary><div class="ans">The app is installed from an APK file rather than the Play Store, so Android may ask you to confirm. If you downloaded it from this page, choose <b>Install anyway</b>. Only download the APK from this official page.</div></details>
+      <details class="glass rv"><summary>What happens if my subscription ends?</summary><div class="ans">Everything you saved stays on your phone and you can still view it. To create, edit or export entries and records you need an active subscription. Renewing adds time on top of what you have left.</div></details>
+      <details class="glass rv"><summary>Which permissions does the app need, and why?</summary><div class="ans">Camera for tour photos, Location while the app is in use to stamp GPS coordinates, and Photos / Media access to save pictures to your Gallery. If you decline, the app shows a simple screen asking for access instead of breaking.</div></details>
+      <details class="glass rv"><summary>Is there an iPhone version?</summary><div class="ans">The download on this page is for Android phones. An iPhone version is not available from this page.</div></details>
+      <details class="glass rv"><summary>How do refunds and cancellation work?</summary><div class="ans">Payments are one-time for the chosen period and never renew automatically. Full details are in our <a href="/refund">Cancellation &amp; Refund Policy</a>, and you can reach us any time from the <a href="/contact">Contact page</a>.</div></details>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FINAL CTA ============ -->
+<section>
+  <div class="wrap">
+    <div class="glass final rv">
+      <h2>Spend less time on paperwork,<br><span class="grad">more time in the forest.</span></h2>
+      <p>Get Forest App on your phone today and let your diary write itself, one entry at a time.</p>
+      <a class="btn shine" href="https://github.com/justapahadi/Forest-App-Release/releases/download/v1.3.0/ForestApp.apk" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12m0 0l-4.5-4.5M12 15l4.5-4.5M4 20h16"/></svg>Download for Android</a>
+    </div>
+  </div>
+</section>
 </main>
-<footer>&copy; 2026 Forest App, operated by Vikas Justa. Support: <a href="mailto:justpahadi.hp@gmail.com">justpahadi.hp@gmail.com</a></footer>
+
+<!-- ============ FOOTER ============ -->
+<footer>
+  <div class="wrap">
+    <div class="foot">
+      <a class="brand" href="/" aria-label="Forest App home"><svg viewBox="0 0 40 40" aria-hidden="true"><rect width="40" height="40" rx="12" fill="#12301f"/><path d="M20 6l8 10h-4l6 8h-5l5 7H10l5-7h-5l6-8h-4z" fill="url(#lg)"/><rect x="18.4" y="30" width="3.2" height="5" rx="1" fill="#d0a85c"/></svg>Forest App</a>
+      <nav aria-label="Policies">
+        <a href="/terms">Terms &amp; Conditions</a>
+        <a href="/privacy">Privacy Policy</a>
+        <a href="/refund">Refunds &amp; Cancellation</a>
+        <a href="/contact">Contact</a>
+      </nav>
+    </div>
+    <p class="copy">&copy; <span data-year>2026</span> Forest App, operated by Vikas Justa. Support: <a href="mailto:justpahadi.hp@gmail.com">justpahadi.hp@gmail.com</a></p>
+  </div>
+</footer>
+
+<!-- mobile sticky download bar -->
+<div class="dock" role="complementary" aria-label="Download Forest App">
+  <div><b>Forest App for Android</b>v1.3.0 · Direct download</div>
+  <a class="btn sm" href="https://github.com/justapahadi/Forest-App-Release/releases/download/v1.3.0/ForestApp.apk" rel="noopener">Download</a>
+</div>
 </body>
 </html>
