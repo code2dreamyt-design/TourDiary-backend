@@ -33,13 +33,18 @@ const fill = (text, sub, now) =>
     .replaceAll("{daysLeft}", sub ? String(Math.max(0, Math.ceil((sub.paidUntil - now) / DAY))) : "0")
     .replaceAll("{paidUntil}", sub ? sub.paidUntil.toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric", timeZone: "Asia/Kolkata" }) : "");
 
-// GET /api/banner?platform=android&version=1.3.0   (Bearer token optional)
+// GET /api/banner?platform=android&version=1.3.0&exclude=id1,id2   (Bearer token optional)
+// `exclude` = banner ids the app has already handled, so the next-best banner can be returned.
 export const getBanner = async (req, res) => {
   try {
     res.set("Cache-Control", "no-store");
     const now = new Date();
     const platform = ["android", "ios"].includes(req.query.platform) ? req.query.platform : null;
     const version = /^\d+(\.\d+){0,3}$/.test(req.query.version || "") ? req.query.version : null;
+
+    const exclude = new Set(
+      String(req.query.exclude || "").split(",").filter((s) => /^[a-f0-9]{24}$/i.test(s)).slice(0, 50).map((s) => s.toLowerCase())
+    );
 
     let sub; // undefined = anonymous, null = logged in without subscription
     const token = req.headers.authorization?.split(" ")[1];
@@ -52,6 +57,7 @@ export const getBanner = async (req, res) => {
 
     const live = await Banner.find({ active: true }).sort({ priority: -1, createdAt: -1 }).lean();
     const b = live.find((x) =>
+      !exclude.has(String(x._id)) &&
       (!x.startsAt || x.startsAt <= now) &&
       (!x.endsAt || x.endsAt > now) &&
       (x.platform === "all" || x.platform === platform) &&
