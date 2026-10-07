@@ -22,6 +22,10 @@ const envSchema = z.object({
     ENTITLEMENT_PUBLIC_KEY: z.string().min(1),
     BREVO_API_KEY:z.string().min(1),
     EMAIL_FROM_NAME:z.string().min(1),
+    // Admin portal (optional: if unset, /api/admin/* answers 503 and nothing else is affected)
+    ADMIN_EMAIL:z.string().email().optional(),
+    ADMIN_PASSWORD_HASH:z.string().min(20).optional(),
+    ADMIN_JWT_SECRET:z.string().min(32).optional(),
 });
 const parsed = envSchema.safeParse(process.env);
 if(!parsed.success){
@@ -49,3 +53,6 @@ export const entitlementPrivateKey = Buffer.from(parsed.data.ENTITLEMENT_PRIVATE
 export const publicPaidUntilKey = parsed.data.ENTITLEMENT_PUBLIC_KEY.replace(/\\n/g, "\n");
 export const brevoApiKey = parsed.data.BREVO_API_KEY;
 export const emailFromName = parsed.data.EMAIL_FROM_NAME;
+export const adminEmail = parsed.data.ADMIN_EMAIL?.toLowerCase();
+export const adminPasswordHash = parsed.data.ADMIN_PASSWORD_HASH;
+export const adminJwtSecret = parsed.data.ADMIN_JWT_SECRET;

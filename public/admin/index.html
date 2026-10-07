@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Forest App · Admin</title>
+<link rel="stylesheet" href="/admin/admin.css">
+</head>
+<body>
+<section id="login" class="center" hidden>
+  <form id="loginForm" class="card login">
+    <h1>🌲 Admin</h1>
+    <input id="email" type="email" placeholder="Email" autocomplete="username" required>
+    <input id="password" type="password" placeholder="Password" autocomplete="current-password" required>
+    <button class="btn primary">Log in</button>
+    <p id="loginErr" class="err"></p>
+  </form>
+</section>
+<div id="app" hidden>
+  <header>
+    <b>🌲 Forest App Admin</b>
+    <nav id="tabs"></nav>
+    <button id="logout" class="btn">Log out</button>
+  </header>
+  <main id="view"></main>
+  <aside id="drawer" hidden></aside>
+</div>
+<div id="toast"></div>
+<script src="/admin/admin.js" defer></script>
+</body>
+</html>
