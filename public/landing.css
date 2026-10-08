@@ -164,7 +164,7 @@ section{position:relative;padding:92px 0}
 .card ul{list-style:none;padding:0;margin:14px 0 0;display:grid;gap:8px}
 .card li{display:flex;gap:10px;color:var(--ink2);font-size:14.5px}
 .card li::before{content:"";flex:none;width:18px;height:18px;margin-top:3px;border-radius:50%;background:rgba(127,209,160,.18) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%237fd1a0' stroke-width='3.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 12.5l4 4 8-9'/%3E%3C/svg%3E") center/12px no-repeat}
-.c-a{grid-column:span 3}.c-b{grid-column:span 3}.c-c{grid-column:span 2}.c-d{grid-column:span 2}.c-e{grid-column:span 2}.c-f{grid-column:span 3}.c-g{grid-column:span 3}
+.c-a,.c-b,.c-d,.c-e,.c-f,.c-g{grid-column:span 3}.c-c,.c-h,.c-i{grid-column:span 2}.c-j,.c-k,.c-l{grid-column:span 2}
 .tag{display:inline-block;margin-left:8px;vertical-align:middle;font:700 11px var(--font-b);letter-spacing:.08em;text-transform:uppercase;color:#2a1f08;background:var(--gold);border-radius:999px;padding:3px 9px}
 
 /* ---------- demo / showcase ---------- */
@@ -289,8 +289,8 @@ footer{position:relative;padding:50px 0 110px;border-top:1px solid var(--line);b
   .hero-grid,.demo,.install{grid-template-columns:1fr}
   .stage{margin-top:26px}
   .bento{grid-template-columns:repeat(2,1fr)}
-  .c-a,.c-b,.c-c,.c-d,.c-e,.c-f,.c-g{grid-column:span 1}
-  .c-g{grid-column:span 2}
+  .c-a,.c-b,.c-c,.c-d,.c-e,.c-f,.c-g,.c-h,.c-i,.c-j,.c-k,.c-l{grid-column:span 1}
+  .c-c,.c-l{grid-column:span 2}
   .steps,.who{grid-template-columns:repeat(2,1fr)}
   .strip-grid{grid-template-columns:repeat(2,1fr)}
   .dl-card{position:static}
@@ -308,7 +308,7 @@ footer{position:relative;padding:50px 0 110px;border-top:1px solid var(--line);b
 }
 @media (max-width:560px){
   .bento,.steps,.who{grid-template-columns:1fr}
-  .c-g{grid-column:span 1}
+  .c-c,.c-l{grid-column:span 1}
   .strip-grid{gap:10px}
   .offer{padding:34px 20px}
   .count div{min-width:70px}
@@ -321,3 +321,10 @@ footer{position:relative;padding:50px 0 110px;border-top:1px solid var(--line);b
   .js .rv{opacity:1;translate:none}
   .hero h1 .line>span{transform:none}
 }
+
+/* ---------- feature cards: problem / fix / how / why ---------- */
+.card .pain{font-style:italic;color:var(--ink);border-left:3px solid var(--gold2,#d0a85c);padding-left:12px;margin:0 0 12px}
+.card .hl{font:700 13px var(--font-d);color:var(--gold2,#d0a85c);margin:16px 0 0;letter-spacing:.2px}
+.card .why{margin-top:14px;font-size:14.5px}.card .why b{color:var(--ink)}
+.nav-links .admin-link{border:1px solid rgba(208,168,92,.55);color:var(--gold2,#d0a85c)}
+.nav-links .admin-link:hover{background:rgba(208,168,92,.14);color:#fff}
