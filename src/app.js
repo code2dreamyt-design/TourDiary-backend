@@ -15,6 +15,7 @@ import deeplinkRouter from "./routes/deeplink.routes.js";
 import adminRouter from "./routes/admin.routes.js";
 import bannerRouter from "./routes/banner.routes.js";
 import deviceRouter from "./routes/device.routes.js";
+import offerRouter from "./routes/offer.routes.js";
 
 const publicDir = path.join(path.dirname(fileURLToPath(import.meta.url)), "..", "public");
 
@@ -53,6 +54,7 @@ app.use("/api/subscription",subscriptionRateLimit);
 app.use("/api/subscription",subscriptionRouter);
 app.use("/api/users",userRouter);
 app.use("/api/banner", bannerRouter);
+app.use("/api/offer", offerRouter);
 app.use("/api/devices", deviceRouter);
 app.use("/api/admin", adminRouter);
 

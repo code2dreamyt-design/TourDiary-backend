@@ -1,6 +1,7 @@
 import User from "../models/User.js";
 import Subscription from "../models/Subscription.js";
-import { TRIAL_DAYS, TRIAL_OFFER_ENDS_AT, isTrialOfferOpen } from "../config/trial.js";
+import { TRIAL_DAYS } from "../config/trial.js";
+import { getOfferEndsAt } from "../services/offer.service.js";
 import { signEntitlement } from "../services/entitlement.service.js";
 
 const JUST_SIGNED_UP_WINDOW_MS = 24 * 60 * 60 * 1000; // matches the 24h verification link validity
@@ -19,7 +20,8 @@ export const claimTrial = async (req, res) => {
     const userId = req.userId;
     const now = new Date();
 
-    if (!isTrialOfferOpen(now)) {
+    const offerEndsAt = await getOfferEndsAt(); // editable from Admin -> Offer
+    if (!(now < offerEndsAt)) {
       return res.status(403).json({
         code: "OFFER_CLOSED",
         message: "Sorry, this free-trial offer has ended. You can subscribe any time to enjoy Forest App.",
@@ -30,7 +32,7 @@ export const claimTrial = async (req, res) => {
     if (!user) return res.status(404).json({ message: "User not found" });
 
     // Only accounts created before the offer ended are eligible
-    if (user.createdAt >= TRIAL_OFFER_ENDS_AT) {
+    if (user.createdAt >= offerEndsAt) {
       return res.status(403).json({
         code: "OFFER_CLOSED",
         message: "Sorry, this free-trial offer was only for users who joined before it ended.",

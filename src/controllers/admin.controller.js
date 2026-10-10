@@ -10,6 +10,7 @@ import Banner from "../models/Banner.js";
 import Event from "../models/Event.js";
 import RefreshToken from "../models/RefreshToken.js";
 import { logEvent } from "../utils/logEvent.js";
+import { getOfferInfo, getOfferEndsAt, setOfferEndsAt } from "../services/offer.service.js";
 
 const DAY = 864e5;
 const bad = (res, m = "Bad id") => res.status(400).json({ message: m });
@@ -222,4 +223,16 @@ export const listEvents = wrap(async (req, res) => {
   const where = req.query.type ? { type: String(req.query.type).slice(0, 50) } : {};
   const [total, events, types] = await Promise.all([Event.countDocuments(where), Event.find(where).sort({ createdAt: -1 }).skip((page - 1) * limit).limit(limit).populate("user", "email name").lean(), Event.distinct("type")]);
   res.json({ total, page, pages: Math.max(1, Math.ceil(total / limit)), types: types.sort(), events });
+});
+
+// ---------- launch offer (free-trial end date) ----------
+export const getOffer = wrap(async (req, res) => res.json(await getOfferInfo()));
+
+export const setOffer = wrap(async (req, res) => {
+  const endsAt = new Date(req.body.endsAt);
+  if (endsAt.getTime() > Date.now() + 400 * DAY) return bad(res, "Choose a date within the next year");
+  const previous = await getOfferEndsAt();
+  await setOfferEndsAt(endsAt, req.admin);
+  logEvent("admin_set_offer", { meta: { by: req.admin, from: previous, to: endsAt } });
+  res.json(await getOfferInfo());
 });

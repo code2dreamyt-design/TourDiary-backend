@@ -2,10 +2,10 @@
 (function () {
   'use strict';
 
-  // Must match the app + backend launch-offer cutoff: 10 Oct 2026 00:00 India time (= 9 Oct 18:30 UTC).
-  // To extend the offer, change this one date (and the backend/app dates). After it passes,
-  // everything marked data-offer disappears by itself.
-  var OFFER_ENDS_AT = Date.parse('2026-10-09T18:30:00Z');
+  // Fallback launch-offer cutoff (21 Oct 2026 00:00 India time = 20 Oct 18:30 UTC), used only if
+  // /api/offer cannot be reached. The real date is managed in Admin -> Offer and fetched below.
+  // After it passes, everything marked data-offer disappears by itself.
+  var OFFER_ENDS_AT = Date.parse('2026-10-20T18:30:00Z');
 
   var root = document.documentElement;
   root.classList.add('js');
@@ -394,9 +394,11 @@
 
     // --- launch offer countdown (and auto-removal after the cutoff)
     var offerEls = $$('[data-offer]');
+    var offerEnd = OFFER_ENDS_AT, ct = null;
     function tick() {
-      var left = OFFER_ENDS_AT - Date.now();
+      var left = offerEnd - Date.now();
       if (left <= 0) { offerEls.forEach(function (e) { e.classList.add('offer-off'); }); return false; }
+      offerEls.forEach(function (e) { e.classList.remove('offer-off'); });
       var d = Math.floor(left / 864e5), h = Math.floor(left % 864e5 / 36e5), m = Math.floor(left % 36e5 / 6e4), s = Math.floor(left % 6e4 / 1e3);
       function pad(n) { return n < 10 ? '0' + n : '' + n; }
       $$('[data-cd="d"]').forEach(function (e) { e.textContent = pad(d); });
@@ -406,8 +408,27 @@
       $$('[data-cd="short"]').forEach(function (e) { e.textContent = d > 0 ? d + 'd ' + pad(h) + 'h left' : pad(h) + ':' + pad(m) + ':' + pad(s); });
       return true;
     }
-    if (offerEls.length && tick()) {
-      var ct = setInterval(function () { if (!tick()) clearInterval(ct); }, 1000);
+    function offerDate() {
+      var txt = new Date(offerEnd - 1).toLocaleDateString('en-IN', { day: 'numeric', month: 'long', timeZone: 'Asia/Kolkata' }) + ', 11:59 PM IST';
+      $$('[data-offer-end]').forEach(function (e) { e.textContent = txt; });
+    }
+    function runOffer() {
+      if (ct) { clearInterval(ct); ct = null; }
+      offerDate();
+      if (tick()) ct = setInterval(function () { if (!tick()) { clearInterval(ct); ct = null; } }, 1000);
+    }
+    if (offerEls.length) {
+      runOffer();
+      // The end date is managed from the admin panel; fetch it so the countdown always matches the server.
+      if (window.fetch) {
+        fetch('/api/offer', { cache: 'no-store' })
+          .then(function (r) { return r.ok ? r.json() : null; })
+          .then(function (j) {
+            var ms = j && Date.parse(j.endsAt);
+            if (ms && ms !== offerEnd) { offerEnd = ms; runOffer(); }
+          })
+          .catch(function () { /* keep the built-in date */ });
+      }
     }
 
     // --- footer year

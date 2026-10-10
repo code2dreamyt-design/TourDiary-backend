@@ -40,6 +40,7 @@ export const adminLoginSchema = z.object({
   password: z.string().min(1).max(200),
 });
 
+export const offerSchema = z.object({ endsAt: iso });
 export const extendSchema = z.object({ days: z.number().int().min(1).max(366) });
 export const pingSchema = z.object({
   deviceId: z.string().trim().min(8).max(100),

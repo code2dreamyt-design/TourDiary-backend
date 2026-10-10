@@ -48,7 +48,7 @@ $("#loginForm").addEventListener("submit", async (e) => {
 $("#logout").addEventListener("click", logout);
 
 // ---------- shell ----------
-const TABS = { Overview: overview, Users: users, Banners: banners, Logs: logs };
+const TABS = { Overview: overview, Users: users, Banners: banners, Offer: offer, Logs: logs };
 function go(name) {
   closeDrawer();
   $("#tabs").replaceChildren(...Object.keys(TABS).map((t) => h("button", { class: t === name ? "on" : "", onclick: () => go(t) }, t)));
@@ -196,3 +196,27 @@ async function logs(v) {
 
 // ---------- boot ----------
 if (token) api("/me").then(showApp).catch(() => ($("#login").hidden = false)); else $("#login").hidden = false;
+
+// ---------- launch offer ----------
+// The offer runs until the END of the chosen day, India time. Stored as the next day's 00:00 IST,
+// which is the same moment the app and website compare against.
+const IST = 330 * 6e4, DAYMS = 864e5;
+const lastDayOf = (iso) => new Date(new Date(iso).getTime() - 1 + IST).toISOString().slice(0, 10);
+const endOfDay = (ymd) => new Date(Date.parse(ymd + "T00:00:00+05:30") + DAYMS).toISOString();
+async function offer(v) {
+  const d = await api("/offer");
+  const day = h("input", { type: "date", value: lastDayOf(d.endsAt) });
+  const save = async (iso, msg) => { if (await act(() => api("/offer", { method: "PUT", body: { endsAt: iso } }), msg)) offer(v).catch((e) => toast(e.message)); };
+  v.replaceChildren(
+    h("h2", {}, "Launch offer"),
+    h("div", { class: "card" },
+      h("p", {}, h("span", { class: "tag " + (d.open ? "live" : "ended") }, d.open ? "Open" : "Closed"), "  ",
+        d.open ? `New users can claim ${d.days} days free until the end of ${lastDayOf(d.endsAt)} (11:59 PM IST).` : "The free-trial offer is closed. Nobody can claim it right now."),
+      h("p", { class: "mute" }, "Exact end moment: " + dt(d.endsAt) + " IST"),
+      h("div", { class: "bar-row" },
+        h("div", {}, h("label", {}, "Last day to claim (India time)"), day),
+        h("button", { class: "btn primary", onclick: () => { if (!day.value) return toast("Pick a date"); save(endOfDay(day.value), "Offer updated"); } }, "Save date"),
+        h("button", { class: "btn", onclick: () => { const base = d.open ? lastDayOf(d.endsAt) : new Date(Date.now() + IST).toISOString().slice(0, 10); save(endOfDay(new Date(Date.parse(base + "T00:00:00Z") + 7 * DAYMS).toISOString().slice(0, 10)), "Extended by 7 days"); } }, "+7 days"),
+        d.open && h("button", { class: "btn danger", onclick: () => { if (confirm("Close the offer right now? Nobody will be able to claim it.")) save(new Date().toISOString(), "Offer closed"); } }, "Close now")),
+      h("p", { class: "mute" }, "Takes effect immediately for claims. The website countdown and the app banner pick it up the next time they open. Users who already claimed are not affected. Accounts created after the end moment are never eligible.")));
+}
